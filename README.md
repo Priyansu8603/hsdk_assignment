@@ -15,7 +15,7 @@ Adhicine is a Flutter-based application designed to help users track and manage 
 
 ### Login Screen
 ![Login Screen](Screenshots/SignInScreen.jpg)
-![Login Screen](Screenshots/GoogleAccountSelection.png)
+![Login Screen](Screenshots/GoogleAccountSelection.jpg)
 
 ### Home
 ![Dashboard](Screenshots/HomeScreen.jpg)
