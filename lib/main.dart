@@ -1,14 +1,33 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hsdk_assignment/Features/Auth/SignIn/View/SignIn.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'Features/Auth/SignIn/Repository/AuthRepository.dart';
+import 'Features/Auth/SignIn/ViewModel/SignInViewModel.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  final authRepository = AuthRepository(); // Initialize only once
+
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider<AuthRepository>(create: (_) => authRepository),
+        ChangeNotifierProvider<AuthViewModel>(
+          create: (context) => AuthViewModel(authRepository),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
