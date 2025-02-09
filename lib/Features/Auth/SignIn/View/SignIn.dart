@@ -180,7 +180,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   )),
               SizedBox(
-                height: 65,
+                height: 50,
               ),
               Container(
                 margin: EdgeInsets.only(left: 20, right: 20),
@@ -283,7 +283,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ],
                     ),
                   )),
-              SizedBox(height: 50),
+              SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

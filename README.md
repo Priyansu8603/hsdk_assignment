@@ -10,6 +10,17 @@ Adhicine is a Flutter-based application designed to help users track and manage 
 - **Push Notifications**: Firebase Cloud Messaging (FCM) is used to send reminders.
 - **MVVM Architecture**: Ensures clean code, better maintainability, and scalability.
 
+
+## Screenshots
+
+### Login Screen
+![Login Screen](Screenshots/SignInScreen.jpg)
+![Login Screen](Screenshots/GoogleAccountSelection.png)
+
+### Home
+![Dashboard](Screenshots/HomeScreen.jpg)
+
+
 ## Project Structure
 
 The app follows a feature-wise segregation inside the `lib/` directory, ensuring modularity and scalability. Each feature follows the MVVM (Model-View-ViewModel) architecture.
