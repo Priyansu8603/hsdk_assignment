@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +15,35 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
+
+  late StreamSubscription<ConnectivityResult> _subscription;
+  bool _isDialogOpen = false; // Prevent multiple dialogs
+
+  @override
+  void initState() {
+    super.initState();
+    checkInternetConnection();
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel(); // Cancel the stream when widget is disposed
+    super.dispose();
+  }
+
+  void checkInternetConnection() {
+    _subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.none) {
+        _showNoInternetDialog();
+      } else {
+        if (_isDialogOpen) {
+          Navigator.pop(context); // Close dialog when internet is back
+          _isDialogOpen = false;
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: true);
@@ -70,4 +102,40 @@ class _HomescreenState extends State<Homescreen> {
       ),
     );
   }
+
+  void _showNoInternetDialog() {
+    if (!_isDialogOpen) {
+      _isDialogOpen = true;
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          title: const Text(
+            'No Internet',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset('Core/Assets/Images/404.png', height: 200,width: 200,), // Add an image in assets
+              const SizedBox(height: 10),
+              const Text(
+                'Please check your internet connection and try again.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK', style: TextStyle(fontSize: 16)),
+            ),
+          ],
+        ),
+      ).then((_) => _isDialogOpen = false);
+    }
+  }
+
+
 }
